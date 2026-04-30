@@ -137,3 +137,6 @@ firebase deploy --only hosting
 - Firestore search uses `medicine_name_lower` for efficient prefix matching.
 - If index errors appear, create index from Firebase console link shown in errors.
 - FCM on web requires HTTPS (or localhost) for full support.
+
+
+
