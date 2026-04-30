@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medicine Availability Finder - Dashboard</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Medicine Availability Finder</h1>
+    <div class="topbar-actions">
+      <span id="userEmail" class="user-chip"></span>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="page dashboard-page">
+    <section class="card">
+      <h2>Search Medicines</h2>
+      <form id="searchForm" class="form-inline">
+        <input id="searchInput" type="text" placeholder="Enter medicine name" required />
+        <button class="btn primary" type="submit">Search</button>
+      </form>
+      <div id="searchLoading" class="loading hidden">Fetching medicines...</div>
+      <p id="searchMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="card" id="addMedicineCard">
+      <h2>Add Medicine Availability</h2>
+      <div id="add-medicine-section">
+      <div id="addMedicineFormSection" class="hidden">
+        <p class="subtitle">Add store listing details below.</p>
+        <form id="medicineForm" class="form" novalidate>
+          <div class="field">
+            <label for="medicineName">Medicine Name</label>
+            <input id="medicineName" type="text" required />
+          </div>
+          <div class="field">
+            <label for="storeName">Store Name</label>
+            <input id="storeName" type="text" required />
+          </div>
+          <div class="field">
+            <label for="location">Location</label>
+            <input id="location" type="text" required />
+          </div>
+          <div class="field">
+            <label for="quantity">Quantity Available</label>
+            <input id="quantity" type="number" min="0" required />
+          </div>
+          <div class="field">
+            <label for="contact">Contact Number</label>
+            <input id="contact" type="tel" required />
+          </div>
+          <button class="btn primary" type="submit">Add Medicine</button>
+        </form>
+        <div id="addLoading" class="loading hidden">Saving medicine...</div>
+      </div>
+      <p id="shopOwnerOnlyNotice" class="subtitle hidden" aria-live="polite">
+        Only medical shop owners can add medicines.
+      </p>
+      </div>
+      <p id="addMessage" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <div id="resultsContainer" class="results-grid"></div>
+    </section>
+  </main>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

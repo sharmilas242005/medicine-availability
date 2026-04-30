@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// Medicines: Step 5 (admin-only writes). Users: own-doc access like Step 5, but writes are
+// constrained so clients cannot set role to "admin" (only Firebase Console / Admin SDK).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /medicines/{docId} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+
+      allow update, delete: if request.auth != null
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // Create default profile (role must be "user"); admins are assigned in Console.
+      allow create: if request.auth != null
+          && request.auth.uid == userId
+          && request.resource.data.uid == userId
+          && request.resource.data.role == 'user';
+      // Email/uid updates only — role cannot change from the client.
+      allow update: if request.auth != null
+          && request.auth.uid == userId
+          && request.resource.data.role == resource.data.role;
+      allow delete: if false;
+    }
+  }
+}
